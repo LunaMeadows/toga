@@ -1,7 +1,7 @@
 from travertino.size import at_least
 
 from ..libs.android.text import InputType, TextWatcher
-from ..libs.android.view import Gravity, View__MeasureSpec
+from ..libs.android.view import Gravity, View__MeasureSpec, OnKeyListener
 from ..libs.android.widget import EditText
 from .base import align
 from .label import TextViewWidget
@@ -23,6 +23,32 @@ class TogaTextWatcher(TextWatcher):
     def onTextChanged(self, _charSequence, _start, _before, _count):
         pass
 
+class TogaKeyListener(OnKeyListener):
+    def __init__(self, impl):
+        super().__init__()
+        self.impl = impl
+        self.interface = impl.interface
+
+    # def getInputType(self):
+    #     return 0
+    #
+    # def onKeyDown(self, _view, _text, _keyCode, _event):
+    #     return True
+    #
+    # def onKeyUp(self, _view, _text,  _keyCode, _event):
+    #     print(_view, _text,  _keyCode, _event)
+    #     return True
+    # def onKeyOther(self, _view, _text, _event):
+    #     print(_view, _text, _event)
+    #     return True
+
+    def onKey(self, _view, _key, _event):
+        if(int(_key) == 66 and int(_event.getAction()) == 1):
+            self.impl.interface.on_enter(None)
+            print(_view, _key, _event)
+        return False
+
+
 
 class TextInput(TextViewWidget):
     def create(self):
@@ -30,6 +56,8 @@ class TextInput(TextViewWidget):
         self.native = EditText(self._native_activity)
         self.native.setInputType(InputType.TYPE_CLASS_TEXT)
         self.cache_textview_defaults()
+        self._KeyListener = TogaKeyListener(self)
+        self.native.setOnKeyListener(self._KeyListener)
 
     def get_value(self):
         return self.native.getText().toString()
