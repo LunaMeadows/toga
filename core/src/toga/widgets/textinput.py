@@ -34,6 +34,7 @@ class TextInput(Widget):
         placeholder=None,
         readonly=False,
         on_change=None,
+        on_enter=None,
         on_gain_focus=None,
         on_lose_focus=None,
         validators=None,
@@ -79,12 +80,14 @@ class TextInput(Widget):
         # Set the actual value before on_change, because we do not want on_change triggered by it
         # However, we need to prime the handler property in case it is accessed.
         self._on_change = None
+        self._on_enter = None
         self.value = value
 
         self.on_change = on_change
         self.validators = validators
         self.on_lose_focus = on_lose_focus
         self.on_gain_focus = on_gain_focus
+        self.on_enter = on_enter
 
     def _create(self):
         self._impl = self.factory.TextInput(interface=self)
@@ -217,3 +220,13 @@ class TextInput(Widget):
         else:
             self._impl.set_error(error_message)
             return False
+
+
+    @property
+    def on_enter(self):
+        """The handler to invoke when the button is pressed."""
+        return self._on_enter
+
+    @on_enter.setter
+    def on_enter(self, handler):
+        self._on_enter = wrapped_handler(self, handler)
