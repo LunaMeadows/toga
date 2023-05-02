@@ -27,7 +27,10 @@ class Selection(Widget):
         self.native.set_active(self.interface.items.index(item))
 
     def get_selected_item(self):
-        return self.native.get_active_text()
+        if self.native.get_active_text():
+            return self.native.get_active_text()
+        else:
+            return None
 
     def rehint(self):
         # width = self.native.get_preferred_width()
