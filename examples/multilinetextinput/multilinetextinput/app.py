@@ -25,6 +25,12 @@ class ExampleMultilineTextInputApp(toga.App):
     def scroll_to_bottom(self, widget):
         self.multiline_input.scroll_to_bottom()
 
+    def scroll_to_line(self, widget):
+        self.multiline_input.scroll_to_line(self.position.value)
+
+    def scroll_to_index(self, widget):
+        self.multiline_input.scroll_to_index(self.position.value)
+
     def set_label(self, widget):
         if self.multiline_input.value == "":
             self.label.text = "Nothing has been written yet"
@@ -62,6 +68,12 @@ class ExampleMultilineTextInputApp(toga.App):
         button_scroll_bottom = toga.Button(
             "Bottom", on_press=self.scroll_to_bottom, style=Pack(flex=1)
         )
+        button_scroll_line = toga.Button(
+            "Line", on_press=self.scroll_to_line, style=Pack(flex=1)
+        )
+        button_scroll_index = toga.Button(
+            "index", on_press=self.scroll_to_index, style=Pack(flex=1)
+        )
 
         btn_box1 = toga.Box(
             children=[
@@ -85,10 +97,19 @@ class ExampleMultilineTextInputApp(toga.App):
             ],
             style=Pack(direction=ROW, margin_bottom=10),
         )
+        self.position = toga.NumberInput(style=Pack(flex=1))
+        btn_box4 = toga.Box(
+            children=[
+                button_scroll_line,
+                button_scroll_index,
+                self.position,
+            ],
+            style=Pack(direction=ROW, margin_bottom=10),
+        )
         self.label = toga.Label("Nothing has been written yet")
 
         outer_box = toga.Box(
-            children=[btn_box1, btn_box2, btn_box3, self.multiline_input, self.label],
+            children=[btn_box1, btn_box2, btn_box3, btn_box4, self.multiline_input, self.label],
             style=Pack(direction=COLUMN, margin=10),
         )
 

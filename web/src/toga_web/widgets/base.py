@@ -77,7 +77,7 @@ class Widget:
         self.native.disabled = not value
 
     def focus(self):
-        self.interface.factory.not_implemented("Widget.focus()")
+        self.native.focus()
 
     def get_tab_index(self):
         self.interface.factory.not_implementated("Widget.get_tab_index()")

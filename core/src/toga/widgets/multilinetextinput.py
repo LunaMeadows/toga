@@ -106,6 +106,14 @@ class MultilineTextInput(Widget):
         """Scroll the view to make the top of the text field visible."""
         self._impl.scroll_to_top()
 
+    def scroll_to_line(self, position: int) -> None:
+        """Scroll the view to make the bottom of the text field visible."""
+        self._impl.scroll_to_line(position)
+
+    def scroll_to_index(self, position: int) -> None:
+        """Scroll the view to make the top of the text field visible."""
+        self._impl.scroll_to_index(position)
+
     @property
     def on_change(self) -> OnChangeHandler:
         """The handler to invoke when the value of the widget changes."""

@@ -36,3 +36,10 @@ class MultilineTextInput(TextInput):
 
     def scroll_to_top(self):
         self.native.setSelection(0)
+
+    def scroll_to_line(self, position):
+        positions_of_new_lines = [0] + [i+1 for i, char in enumerate(str(self.native.getText())) if char == '\n']
+        self.native.setSelection(positions_of_new_lines[int(position)])
+
+    def scroll_to_index(self, position):
+        self.native.setSelection(int(position))

@@ -167,3 +167,15 @@ class MultilineTextInput(Widget):
         self.native_textview.scroll_to_mark(
             self.buffer.get_insert(), 0.0, True, 0.0, 0.0
         )
+
+    def scroll_to_line(self, position):
+        self.buffer.place_cursor(self.buffer.get_iter_at_line(position))
+        self.native_textview.scroll_to_mark(
+            self.buffer.get_insert(), 0.0, True, 0.0, 0.0
+        )
+
+    def scroll_to_index(self, position):
+        self.buffer.place_cursor(self.buffer.get_iter_at_offset(position))
+        self.native_textview.scroll_to_mark(
+            self.buffer.get_insert(), 0.0, True, 0.0, 0.0
+        )
